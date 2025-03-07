@@ -9,7 +9,7 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  base: "/databoard/",
+  base: "/docs/",
   build: {
     outDir: "docs",
   },
