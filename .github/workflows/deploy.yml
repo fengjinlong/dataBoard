@@ -7,15 +7,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      # - run: pnpm install && pnpm build # 安装依赖并构建项目
+
+      # 启用 Corepack（管理 pnpm）
       - name: Enable Corepack
-      run: corepack enable
-- name: Install dependencies and build
-  run: |
-    pnpm install
-    pnpm build
+        run: corepack enable
+
+      # 安装依赖并构建
+      - name: Install dependencies and build
+        run: |
+          pnpm install
+          pnpm build
+
+      # 部署到 GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist # 指定要部署的文件夹{{
+          publish_dir: ./dist # 指定要部署的文件夹
