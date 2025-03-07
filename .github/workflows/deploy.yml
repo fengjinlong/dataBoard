@@ -7,7 +7,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: pnpm install && pnpm build # 安装依赖并构建项目
+      # - run: pnpm install && pnpm build # 安装依赖并构建项目
+      - name: Enable Corepack
+      run: corepack enable
+- name: Install dependencies and build
+  run: |
+    pnpm install
+    pnpm build
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
