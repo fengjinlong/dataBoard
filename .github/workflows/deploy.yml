@@ -8,8 +8,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: npm install && npm run build # 安装依赖并构建项目
+
+      # 新增：重命名 dist 目录为 docs
+      - name: Rename dist to docs
+        run: mv dist docs
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist # 指定要部署的文件夹
+          publish_dir: ./docs # 修改为重命名后的目录
