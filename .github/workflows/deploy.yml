@@ -1,15 +1,15 @@
 name: Deploy to GitHub Pages
 on:
   push:
-    branches: [ main ]  # 触发分支
+    branches: [main] # 触发分支
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: npm install && npm run build  # 安装依赖并构建项目
+      - run: pnpm install && pnpm build # 安装依赖并构建项目
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist  # 指定要部署的文件夹{{
+          publish_dir: ./dist # 指定要部署的文件夹{{
