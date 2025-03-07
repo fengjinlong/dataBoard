@@ -1,26 +1,35 @@
 name: Deploy to GitHub Pages
 on:
   push:
-    branches: [main] # 触发分支
+    branches: [main]
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      # 启用 Corepack（管理 pnpm）
-      - name: Enable Corepack
-        run: corepack enable
+      # 安装 Node.js 并启用 Corepack
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: pnpm
+
+      # 修复 Corepack 配置
+      - name: Fix Corepack
+        run: |
+          corepack disable
+          corepack enable
+          corepack prepare pnpm@latest --activate
 
       # 安装依赖并构建
-      - name: Install dependencies and build
-        run: |
-          pnpm install
-          pnpm build
+      - name: Install dependencies
+        run: pnpm install
+      - name: Build project
+        run: pnpm build
 
       # 部署到 GitHub Pages
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist # 指定要部署的文件夹
+          publish_dir: ./dist
